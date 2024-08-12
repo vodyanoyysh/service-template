@@ -4,9 +4,9 @@ version = "0.1.0"
 description = ""
 authors = ["d.a.kolesov <d.a.kolesov@s7.ru>"]
 readme = "README.md"
-packages = [
-    { include = "service" }
-]
+
+[tool.poetry.package.include]
+"service" = { from = "service" }
 
 [tool.poetry.dependencies]
 python = "^3.11"
