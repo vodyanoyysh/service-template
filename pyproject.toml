@@ -1,0 +1,40 @@
+[tool.poetry]
+name = "template-service"
+version = "0.1.0"
+description = ""
+authors = ["d.a.kolesov <d.a.kolesov@s7.ru>"]
+readme = "README.md"
+packages = [
+    { include = "service" }
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+s7configmap = "^0.6.6"
+s7metrics = "^1.2.4"
+fastapi = "^0.112.0"
+schedule = "^1.2.2"
+uvicorn = "^0.30.5"
+
+
+[[tool.poetry.source]]
+name = "nexus"
+url = "https://nexus.s7.aero/repository/cdw-pypi/simple/"
+priority = "default"
+
+
+[[tool.poetry.source]]
+name = "PyPI"
+priority = "supplemental"
+
+[tool.poetry.group.test]
+optional = true
+
+
+[tool.poetry.group.test.dependencies]
+python = "^3.11"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
