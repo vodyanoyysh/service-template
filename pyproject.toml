@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "template-service"
+name = "template_service"
 version = "0.1.0"
 description = ""
 authors = ["d.a.kolesov <d.a.kolesov@s7.ru>"]
