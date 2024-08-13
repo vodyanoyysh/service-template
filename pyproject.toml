@@ -5,9 +5,6 @@ description = ""
 authors = ["d.a.kolesov <d.a.kolesov@s7.ru>"]
 readme = "README.md"
 
-[tool.poetry.package.include]
-"service" = { from = "service" }
-
 [tool.poetry.dependencies]
 python = "^3.11"
 #s7configmap = "^0.6.6"
