@@ -6,13 +6,13 @@ import schedule
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
-from serivce.api.router import router
-from serivce.core.config import get_config
-from serivce.core.metrics import MetricsLoader
-from serivce.core.logger import set_logger_config, get_logger
+from template_service.api.router import router
+from template_service.core.config import get_config
+from template_service.core.metrics import MetricsLoader
+from template_service.core.logger import set_logger_config
 
 
-class Service:
+class TemplateService:
     def __init__(self, config_file_name: str):
         """
         Инициализация сервиса
