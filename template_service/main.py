@@ -49,7 +49,7 @@ class TemplateService:
         await self._start_server()
         self.stop()
 
-    def run(self):
+    def run(self, **kwargs):
         """
         Запуск сервиса
         :return:
