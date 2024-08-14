@@ -44,6 +44,8 @@ class TemplateService:
         if self.cfg.schedule:
             self._create_schedule(self.run)
             asyncio.create_task(self._scheduler())
+        else:
+            self.run()
         await self._start_server()
         self.stop()
 
