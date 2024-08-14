@@ -71,15 +71,15 @@ class TemplateService:
         cfg = self.cfg.schedule
         if cfg:
             if hasattr(self.cfg.schedule, 'every_day'):
-                for time in cfg.every_day.start_at:
-                    self.log.info(f"create schedule every day run at {time}")
-                    schedule.every().day.at(time).do(self._wrap_job(func))
+                for job in cfg.every_day.start_at:
+                    self.log.info(f"create schedule every day run at {job.time} tag: {job.tag} kwargs: {job.kwargs}")
+                    schedule.every().day.at(job.time).do(self._wrap_job(func, **job.kwargs)).tag(job.tag)
 
             if hasattr(cfg, 'weeks'):
                 for week in cfg.weeks:
-                    for time in week.start_at:
-                        self.log.info(f"create schedule week {week.weekday} run at {time}")
-                        getattr(schedule.every(), week.weekday).at(time).do(self._wrap_job(func))
+                    for job in week.start_at:
+                        self.log.info(f"create schedule week {week.weekday} run at {job.time} tag: {job.tag} kwargs: {job.kwargs}")
+                        getattr(schedule.every(), week.weekday).at(job.time).do(self._wrap_job(func, **job.kwargs))
 
     async def _scheduler(self):
         """
@@ -91,7 +91,7 @@ class TemplateService:
             self.log.info(f"next schedule run at {schedule.next_run().strftime('%H:%M:%S')}")
             await asyncio.sleep(self.cfg.service.wait_time)
 
-    def _wrap_job(self, func):
+    def _wrap_job(self, func, **kwargs):
         """
         Обертка для функции job'a с обработкой ошибок и повторными попытками.
         :param func: Функция
@@ -104,7 +104,7 @@ class TemplateService:
 
             while retry_count < max_retry_count:
                 try:
-                    await func()
+                    await func(**kwargs)
                     return
                 except Exception as err:
                     self.log.error(f"Error executing job: {err}")

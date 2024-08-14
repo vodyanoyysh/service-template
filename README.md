@@ -2,16 +2,25 @@
 
 ## Usage example
 ```python
+import asyncio
 
-class MyService(Service):
-        def __init__(self, config_file_name: str):
+from template_service.main import TemplateService
+
+
+class Service(TemplateService):
+    def __init__(self, config_file_name: str):
         super().__init__(config_file_name)
-        self.app.include_router(custom_router)
         asyncio.run(self.start())
 
-    def run(self):
-        while True:
-            self.log.info("hello world")
+    async def run(self, job_name: str):
+        if job_name == "job name":
+            print(True)
+        else:
+            print(False)
+
+
+if __name__ == '__main__':
+    service = Service("application.yml")
 ```
 
 
@@ -30,10 +39,18 @@ service:
 
 schedule:
   every_day:
-    start_at: [ "04:19", "04:20" ]
+    start_at:
+      - time: "12:04"
+        tag: "job tag"
+        kwargs:
+          job_name: "job name"
   weeks:
-    - weekday: "monday"
-      start_at: [ "10:10" ]
+    - weekday: "wednesday"
+      start_at:
+        - time: "12:07"
+          tag: "job tag"
+          kwargs:
+            job_name: "job name"
 
 log:
   name: "service-name"
